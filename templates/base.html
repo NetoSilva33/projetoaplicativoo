@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title or "ERP Empresarial" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="manifest" href="{{ url_for('manifest') }}">
+  <meta name="theme-color" content="#0f766e">
+  <link rel="icon" href="{{ url_for('static', filename='icon.svg') }}">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">ERP Empresarial</div>
+    <div class="user-small">Logado: {{ session.get("usuario") }}</div>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('clientes') }}">Clientes</a>
+    <a href="{{ url_for('orcamentos') }}">Orçamentos</a>
+    <a href="{{ url_for('financeiro') }}">Financeiro</a>
+    <a href="{{ url_for('tarefas') }}">Tarefas</a>
+    <a href="{{ url_for('logout') }}">Sair</a>
+  </aside>
+
+  <main class="content">
+    <div class="install-tip">No celular, abra pelo navegador e use “Adicionar à Tela de Início” para instalar como app.</div>
+
+    {% with mensagens = get_flashed_messages() %}
+      {% if mensagens %}
+        {% for msg in mensagens %}
+          <div class="flash">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/service-worker.js").catch(() => {});
+}
+</script>
+</body>
+</html>

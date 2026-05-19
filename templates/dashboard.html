@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="topbar">
+  <h1>Dashboard empresarial</h1>
+  <p>Resumo financeiro, clientes e tarefas.</p>
+</div>
+
+<div class="grid">
+  <div class="card"><span>Receitas</span><div class="metric">{{ receitas|moeda }}</div></div>
+  <div class="card"><span>Despesas</span><div class="metric">{{ despesas|moeda }}</div></div>
+  <div class="card"><span>Saldo / Lucro</span><div class="metric">{{ saldo|moeda }}</div></div>
+  <div class="card"><span>Clientes</span><div class="metric">{{ qtd_clientes }}</div></div>
+</div>
+
+<br>
+
+<div class="card">
+  <h2>Últimos lançamentos</h2>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Tipo</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Data</th></tr>
+      {% for item in ultimos %}
+      <tr>
+        <td><span class="badge">{{ item.tipo }}</span></td>
+        <td>{{ item.descricao }}</td>
+        <td>{{ item.categoria or "" }}</td>
+        <td>{{ item.valor|moeda }}</td>
+        <td>{{ item.data_movimento }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

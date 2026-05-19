@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Financeiro</h1>
+<p>Registre receitas e despesas.</p>
+
+<div class="card">
+  <form method="post" class="form-grid">
+    <div>
+      <label>Tipo</label>
+      <select name="tipo">
+        <option value="receita">Receita</option>
+        <option value="despesa">Despesa</option>
+      </select>
+    </div>
+    <div><label>Valor</label><input name="valor" required placeholder="Ex: 1500"></div>
+    <div><label>Descrição</label><input name="descricao" required></div>
+    <div><label>Categoria</label><input name="categoria" placeholder="Material, serviço, combustível..."></div>
+    <div><label>Forma de pagamento</label><input name="forma_pagamento" placeholder="Pix, dinheiro, cartão..."></div>
+    <div><label>Data</label><input type="date" name="data_movimento"></div>
+    <div class="full"><label>Observação</label><textarea name="observacao"></textarea></div>
+    <div class="full"><button>Registrar lançamento</button></div>
+  </form>
+</div>
+
+<br>
+
+<div class="card table-wrap">
+  <table>
+    <tr><th>Tipo</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Pagamento</th><th>Data</th></tr>
+    {% for m in movimentos %}
+    <tr>
+      <td><span class="badge">{{ m.tipo }}</span></td><td>{{ m.descricao }}</td>
+      <td>{{ m.categoria or "" }}</td><td>{{ m.valor|moeda }}</td>
+      <td>{{ m.forma_pagamento or "" }}</td><td>{{ m.data_movimento }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

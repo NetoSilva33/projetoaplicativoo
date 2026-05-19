@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Orçamentos</h1>
+<p>Crie orçamentos, calcule lucro e gere PDF.</p>
+
+<div class="card">
+  <form method="post" class="form-grid">
+    <div>
+      <label>Cliente cadastrado</label>
+      <select name="cliente_id">
+        <option value="">Selecionar ou preencher nome abaixo</option>
+        {% for c in clientes %}
+          <option value="{{ c.id }}">{{ c.nome }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div><label>Cliente avulso</label><input name="cliente_nome" placeholder="Nome do cliente"></div>
+    <div><label>Serviço</label><input name="servico" required placeholder="Instalação, manutenção, móveis..."></div>
+    <div><label>Quantidade</label><input name="quantidade"></div>
+    <div><label>Valor dos materiais</label><input name="valor_materiais" placeholder="Ex: 4100"></div>
+    <div><label>Mão de obra</label><input name="valor_mao_obra" placeholder="Ex: 1600"></div>
+    <div><label>Despesas extras</label><input name="despesas_extras" placeholder="Ex: 150"></div>
+    <div><label>Forma de pagamento</label><input name="forma_pagamento" placeholder="Pix, cartão..."></div>
+    <div>
+      <label>Status</label>
+      <select name="status">
+        <option value="gerado">Gerado</option>
+        <option value="enviado">Enviado</option>
+        <option value="aprovado">Aprovado</option>
+        <option value="recusado">Recusado</option>
+      </select>
+    </div>
+    <div class="full"><label>Observação</label><textarea name="observacao"></textarea></div>
+    <div class="full"><button>Criar orçamento</button></div>
+  </form>
+</div>
+
+<br>
+
+<div class="card table-wrap">
+  <table>
+    <tr><th>ID</th><th>Cliente</th><th>Serviço</th><th>Total</th><th>Lucro</th><th>Status</th><th>PDF</th></tr>
+    {% for o in orcamentos %}
+    <tr>
+      <td>#{{ o.id }}</td><td>{{ o.cliente_nome }}</td><td>{{ o.servico }}</td>
+      <td>{{ o.total|moeda }}</td><td>{{ o.lucro_estimado|moeda }}</td><td><span class="badge">{{ o.status }}</span></td>
+      <td><a class="btn" href="{{ url_for('baixar_pdf', orcamento_id=o.id) }}">Baixar</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

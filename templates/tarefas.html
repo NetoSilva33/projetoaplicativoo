@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Tarefas</h1>
+<p>Controle pendências, serviços e atividades internas.</p>
+
+<div class="card">
+  <form method="post" class="form-grid">
+    <div><label>Título</label><input name="titulo" required></div>
+    <div>
+      <label>Status</label>
+      <select name="status">
+        <option value="pendente">Pendente</option>
+        <option value="em andamento">Em andamento</option>
+        <option value="concluida">Concluída</option>
+      </select>
+    </div>
+    <div>
+      <label>Prioridade</label>
+      <select name="prioridade">
+        <option value="baixa">Baixa</option>
+        <option value="normal" selected>Normal</option>
+        <option value="alta">Alta</option>
+      </select>
+    </div>
+    <div><label>Vencimento</label><input type="date" name="vencimento"></div>
+    <div class="full"><label>Descrição</label><textarea name="descricao"></textarea></div>
+    <div class="full"><button>Cadastrar tarefa</button></div>
+  </form>
+</div>
+
+<br>
+
+<div class="card table-wrap">
+  <table>
+    <tr><th>Título</th><th>Status</th><th>Prioridade</th><th>Vencimento</th><th>Descrição</th><th>Ação</th></tr>
+    {% for t in tarefas %}
+    <tr>
+      <td>{{ t.titulo }}</td><td><span class="badge">{{ t.status }}</span></td>
+      <td>{{ t.prioridade }}</td><td>{{ t.vencimento or "" }}</td>
+      <td>{{ t.descricao or "" }}</td>
+      <td>{% if t.status != "concluida" %}<a class="btn" href="{{ url_for('concluir_tarefa', tarefa_id=t.id) }}">Concluir</a>{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

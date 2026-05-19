@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acessar ERP</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="manifest" href="{{ url_for('manifest') }}">
+  <meta name="theme-color" content="#0f766e">
+</head>
+<body class="login-body">
+  <div class="login-card">
+    <h1>Acessar ERP</h1>
+    <p>Entre com o usuário administrador.</p>
+
+    {% with mensagens = get_flashed_messages() %}
+      {% if mensagens %}
+        {% for msg in mensagens %}
+          <div class="flash">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="post">
+      <label>Usuário</label>
+      <input name="usuario" required placeholder="admin">
+      <br><br>
+      <label>Senha</label>
+      <input name="senha" type="password" required placeholder="Sua senha">
+      <br><br>
+      <button style="width:100%">Entrar</button>
+    </form>
+
+    <p style="font-size:13px;margin-top:18px;">No Render, configure ADMIN_USER e ADMIN_PASSWORD nas variáveis de ambiente.</p>
+  </div>
+</body>
+</html>

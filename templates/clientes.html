@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Clientes</h1>
+<p>Cadastre e consulte seus clientes.</p>
+
+<div class="card">
+  <form method="post" class="form-grid">
+    <div><label>Nome</label><input name="nome" required></div>
+    <div><label>CPF/CNPJ</label><input name="documento"></div>
+    <div><label>Telefone</label><input name="telefone"></div>
+    <div><label>E-mail</label><input name="email"></div>
+    <div class="full"><label>Endereço</label><input name="endereco"></div>
+    <div class="full"><label>Observação</label><textarea name="observacao"></textarea></div>
+    <div class="full"><button>Cadastrar cliente</button></div>
+  </form>
+</div>
+
+<br>
+
+<div class="card table-wrap">
+  <table>
+    <tr><th>Nome</th><th>Documento</th><th>Telefone</th><th>E-mail</th><th>Endereço</th><th>Observação</th></tr>
+    {% for c in clientes %}
+    <tr>
+      <td>{{ c.nome }}</td><td>{{ c.documento or "" }}</td><td>{{ c.telefone or "" }}</td>
+      <td>{{ c.email or "" }}</td><td>{{ c.endereco or "" }}</td><td>{{ c.observacao or "" }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

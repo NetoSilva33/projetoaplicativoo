@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: erp-empresarial
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASSWORD
+        value: troque_essa_senha
+      - key: APP_NAME
+        value: ERP Empresarial
+      - key: DATABASE_URL
+        fromDatabase:
+          name: erp-empresarial-db
+          property: connectionString
+
+databases:
+  - name: erp-empresarial-db
+    plan: free
